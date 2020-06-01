@@ -110,8 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             reading,
-            CenteredReading(((x.abs()) * 1000)),
-            LastReading((x.abs()) * 1000),
+            CenteredReading((x.abs()) * 1000)),
+           LastReading((x.abs()) * 1000),
 
             //Using buttons to increase an decrease speed
             //           FloatingActionButton(
