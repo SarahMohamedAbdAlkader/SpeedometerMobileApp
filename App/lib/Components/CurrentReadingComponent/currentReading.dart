@@ -36,7 +36,7 @@ class CurrentReading extends StatefulWidget {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 'Current Speed',
-                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 35),
+                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 32),
               ),
             ),
             Padding(
