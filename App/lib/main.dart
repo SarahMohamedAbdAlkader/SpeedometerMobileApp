@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:geolocator/geolocator.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 
@@ -59,6 +59,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   double x, y, z;
   int _speed = 0;
+  Position _currentPosition;
   void setCurrentSpeed(int speed) {
     setState(() {
       _speed = speed;
@@ -68,32 +69,46 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    userAccelerometerEvents.listen((UserAccelerometerEvent event) {
-      setState(() {
-        x = event.x;
-        y = event.y;
-        z = event.z;
-        setCurrentSpeed(y.abs().round());
-      });
-      // sleep(const Duration (seconds:2));
+    _getCurrentLocation();
+    // userAccelerometerEvents.listen((UserAccelerometerEvent event) {
+    //   setState(() {
+    //     x = event.x;
+    //     y = event.y;
+    //     z = event.z;
+    //     setCurrentSpeed(y.abs().round());
+    //   });
+    //   // sleep(const Duration (seconds:2));
       
-    }); //get the sensor data and set then to the data types
+    // }); //get the sensor data and set then to the data types
   }
 
-  int _counter = 0;
+  // int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  // void _incrementCounter() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
+
+  // void _decrementCounter() {
+  //   setState(() {
+  //     _counter--;
+  //   });
+  // }
+ _getCurrentLocation() {
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+        _getCurrentLocation();
+      });
+    }).catchError((e) {
+      print(e);
     });
   }
-
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -102,20 +117,22 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    var reading = CurrentReading(((y.abs()) * 1000).toStringAsFixed(2));
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            reading,
-            CenteredReading((y.abs()) * 1000),
-           LastReading((y.abs()) * 1000),
+    var reading = CurrentReading('${_currentPosition.speed.toStringAsFixed(2)}');
+    var centeredReading = CenteredReading(double.parse('${(_currentPosition.speed)}'));
+        var lastReading = LastReading(double.parse('${_currentPosition.speed}'));
+                return Scaffold(
+                  appBar: AppBar(
+                    // Here we take the value from the MyHomePage object that was created by
+                    // the App.build method, and use it to set our appbar title.
+                    title: Text(widget.title),
+                  ),
+                  body: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        reading,
+                         centeredReading,
+                   lastReading,
 
             //Using buttons to increase an decrease speed
             //           FloatingActionButton(

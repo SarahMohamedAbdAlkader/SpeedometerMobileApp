@@ -34,10 +34,9 @@ void startTimer(){ _start = 0;
   @override
   Widget build(BuildContext context) {
 
-    if (reading == 10){
+    if (reading >= 10 && reading < 11){
 startTimer();
     }
-
 
     return  Center(
 
