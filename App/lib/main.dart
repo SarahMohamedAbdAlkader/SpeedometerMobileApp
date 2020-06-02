@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 
@@ -73,6 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
         z = event.z;
         setCurrentSpeed(y.abs().round());
       });
+      // sleep(const Duration (seconds:2));
+      
     }); //get the sensor data and set then to the data types
   }
 
@@ -98,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    var reading = CurrentReading(((x.abs()) * 1000).toStringAsFixed(2));
+    var reading = CurrentReading(((y.abs()) * 1000).toStringAsFixed(2));
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -110,8 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             reading,
-            CenteredReading((x.abs()) * 1000),
-           LastReading((x.abs()) * 1000),
+            CenteredReading((y.abs()) * 1000),
+           LastReading((y.abs()) * 1000),
 
             //Using buttons to increase an decrease speed
             //           FloatingActionButton(
@@ -119,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //   tooltip: 'Increment',
             //   child: Icon(Icons.add),
             // ),
-            // FloatingActionButton(
+           // FloatingActionButton(
             //   onPressed: _decrementCounter,
             //   tooltip: 'Decrease',
             //   child: Icon(Icons.remove),

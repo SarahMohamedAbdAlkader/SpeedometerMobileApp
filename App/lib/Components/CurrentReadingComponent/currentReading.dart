@@ -44,7 +44,7 @@ class CurrentReading extends StatefulWidget {
               child: Text(reading,
                   style: TextStyle(
                       fontFamily: 'Digital',
-                      fontSize: 150,
+                      fontSize: 110,
                       color: Colors.green)),
             ),
             Padding(

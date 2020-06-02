@@ -24,8 +24,8 @@ class _CenteredReading extends State<CenteredReading>{
 void startTimer(){ _start = 0;
     const oneSec=const Duration(seconds: 1);
    new Timer.periodic(oneSec, (Timer timer) { setState(() {
-      if(_start <=0  ){timer.cancel();}
-     if(reading ==30 || reading<10  ){timer.cancel();}
+      if(_start <0  ){timer.cancel();}
+     if(reading ==30 || reading <10  ){timer.cancel();}
      else  _start=_start+1;
     });});
 }
@@ -34,7 +34,7 @@ void startTimer(){ _start = 0;
   @override
   Widget build(BuildContext context) {
 
-    if (reading == 10.00){
+    if (reading == 10){
 startTimer();
     }
 
